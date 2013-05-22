@@ -1,0 +1,4 @@
+user = conge
+password = conge
+ip = 127.0.0.1
+bdd = conge
