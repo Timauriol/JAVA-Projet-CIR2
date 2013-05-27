@@ -17,7 +17,8 @@ public class Fenetre extends JFrame {
     
     // Variables declaration                
     private JMenuBar MainMenu;
-    private JMenu Menu_Conf;    Panel_login panel_login = new Panel_login();
+    private JMenu Menu_Conf;
+    Panel_login panel_login = new Panel_login();
     Panel_consult panel_consult = new Panel_consult(this);
     User user = new User();
     Bdd bdd = new Bdd();               
@@ -30,14 +31,35 @@ public class Fenetre extends JFrame {
         this.add("Center", panel_login); // Ajout du Panel_login à la fenetre
         
         panel_consult.setVisible(false);
+        
         // On récupère le boutton panel_login
-        JButton button_connexion = panel_login.getButton();
+        JButton button_connexion = panel_login.getJButton();   
         
         // On redéfinit le comportement du boutton
         button_connexion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                jButton_ConnexionActionPerformed(evt);
+                connexion();
+            }
+        });
+        
+        // On récupère le jTextField_Login
+        JTextField jTextField_Login =  panel_login.getJTextField_Login();
+        // On redéfinit le comportement du jTextField_Login
+        jTextField_Login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                connexion(); 
+            }
+        });
+        
+        // On récupère le jPasswordField
+        JPasswordField jPasswordField = panel_login.getJPasswordField();
+        // On redéfinit le comportement du jPasswordField
+        jPasswordField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                connexion(); 
             }
         });
         
@@ -77,11 +99,20 @@ public class Fenetre extends JFrame {
 
     private void Menu_ConfMouseClicked(MouseEvent evt) {                                       
         String url_conf = JOptionPane.showInputDialog(null, "Entrez l'addresse du serveur (ip:port)");
+        String[] temp;
+        temp = url_conf.split(":");
+        String url = temp[0];
+        String port = temp[1];
+        bdd.editConf(url,port);
+        System.out.println(bdd.ip);
+        System.out.println(bdd.port);
+        System.out.println(bdd.bdd);
+        bdd = new Bdd();  
     }                                      
-
-    private void jButton_ConnexionActionPerformed(ActionEvent evt) {
-        String login = panel_login.getjTextField_Login();
-        String mdp = panel_login.getPasswordField();
+    
+    private void connexion () {
+        String login = panel_login.getLogin();
+        String mdp = panel_login.getPassword();
         user.verif_Auth(bdd.connecBDD,login,mdp);
         
        if (user.auth){
@@ -91,6 +122,5 @@ public class Fenetre extends JFrame {
             panel_consult.setVisible(true);
             System.out.println("Affichage du panel_consult");
        }
-       
-    }       
+    }
 }

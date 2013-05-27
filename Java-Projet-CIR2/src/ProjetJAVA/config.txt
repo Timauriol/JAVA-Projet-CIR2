@@ -1,4 +1,5 @@
-user = conge
-password = conge
-ip = 127.0.0.1
-bdd = conge
+#Dernière mise a jour :
+#Mon May 27 20:14:09 CEST 2013
+port=3306
+bdd=conge
+ip=127.0.0.1

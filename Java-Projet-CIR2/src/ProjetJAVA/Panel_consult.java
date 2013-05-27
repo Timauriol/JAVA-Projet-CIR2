@@ -1,5 +1,6 @@
 package ProjetJAVA;
 
+import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -19,7 +20,9 @@ public class Panel_consult extends JPanel {
     }
         
     private void initComponents(JFrame frame) {
+        this.setLayout(new BorderLayout());
         JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP);
+       
         
         JPanel onglet1 = new JPanel();
         JLabel titreOnglet1 = new JLabel("Onglet 1");

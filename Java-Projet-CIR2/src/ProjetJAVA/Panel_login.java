@@ -63,25 +63,15 @@ public class Panel_login extends JPanel {
         jTextField_Login.setMinimumSize(new Dimension(125, 22));
         jTextField_Login.setName(""); // NOI18N
         jTextField_Login.setPreferredSize(new Dimension(125, 22));
-        jTextField_Login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                jTextField_LoginActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
+
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         add(jTextField_Login, gridBagConstraints);
 
         jPasswordField.setMinimumSize(new Dimension(125, 22));
         jPasswordField.setPreferredSize(new Dimension(125, 22));
-        jPasswordField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                jPasswordFieldActionPerformed(evt);
-            }
-        });
+
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -99,30 +89,27 @@ public class Panel_login extends JPanel {
         gridBagConstraints.gridy = 10;
         add(jButton_Connexion, gridBagConstraints);
     }// </editor-fold>                        
+                                                                                    
+    public String getLogin() {
+        String login = jTextField_Login.getText();
+        return login;
+    }
+    public String getPassword() {
+    char[] mdp_buff = jPasswordField.getPassword();
+    String mdp = new String (mdp_buff);
+    return mdp;
+    } 
 
-    private void jTextField_LoginActionPerformed(ActionEvent evt) {                                                 
-        // TODO add your handling code here:
-    }                                                
-
-    private void jPasswordFieldActionPerformed(ActionEvent evt) {                                               
-        // TODO add your handling code here:
-    }                                                                                        
-
- public JButton getButton() {
-  return jButton_Connexion;
- }  
- 
-  public String getjTextField_Login() {
-  String login = jTextField_Login.getText();
-  return login;
- }
-  public String getPasswordField() {
-  char[] mdp_buff = jPasswordField.getPassword();
-  String mdp = new String (mdp_buff);
-  return mdp;
- } 
+    public JButton getJButton() {
+        return jButton_Connexion;
+    } 
     
-    
+    public JTextField getJTextField_Login() {
+    return jTextField_Login;
+    }
 
-                 
+    public JPasswordField getJPasswordField() {
+    return jPasswordField;
+    } 
+            
 }
