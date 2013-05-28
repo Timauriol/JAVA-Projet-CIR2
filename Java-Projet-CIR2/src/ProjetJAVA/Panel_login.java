@@ -35,7 +35,8 @@ public class Panel_login extends JPanel {
                        
     private void initComponents() {
         GridBagConstraints gridBagConstraints;
-
+        
+        // Déclaration
         jLabel_Auth = new JLabel();
         jLabel_login = new JLabel();
         jTextField_Login = new JTextField();
@@ -43,6 +44,7 @@ public class Panel_login extends JPanel {
         jLabel_Password = new JLabel();
         jButton_Connexion = new JButton();
 
+        // Layout
         GridBagLayout layout = new GridBagLayout();
         layout.columnWidths = new int[] {0};
         layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
@@ -59,7 +61,8 @@ public class Panel_login extends JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         add(jLabel_login, gridBagConstraints);
-
+        
+        // Dimension
         jTextField_Login.setMinimumSize(new Dimension(125, 22));
         jTextField_Login.setName(""); // NOI18N
         jTextField_Login.setPreferredSize(new Dimension(125, 22));
@@ -68,7 +71,8 @@ public class Panel_login extends JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         add(jTextField_Login, gridBagConstraints);
-
+        
+        // Dimension
         jPasswordField.setMinimumSize(new Dimension(125, 22));
         jPasswordField.setPreferredSize(new Dimension(125, 22));
 
@@ -89,25 +93,30 @@ public class Panel_login extends JPanel {
         gridBagConstraints.gridy = 10;
         add(jButton_Connexion, gridBagConstraints);
     }// </editor-fold>                        
-                                                                                    
+    
+    // Getter sur Login
     public String getLogin() {
         String login = jTextField_Login.getText();
         return login;
     }
+    // Getter sur Password
     public String getPassword() {
     char[] mdp_buff = jPasswordField.getPassword();
     String mdp = new String (mdp_buff);
     return mdp;
     } 
-
+    
+    // Getter sur JButton
     public JButton getJButton() {
         return jButton_Connexion;
     } 
     
+    // Getter sur JTextField
     public JTextField getJTextField_Login() {
     return jTextField_Login;
     }
-
+    
+    // Getter sur JPassword
     public JPasswordField getJPasswordField() {
     return jPasswordField;
     } 

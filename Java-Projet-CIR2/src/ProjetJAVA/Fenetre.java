@@ -65,11 +65,8 @@ public class Fenetre extends JFrame {
         
         // Affichage du Panel_login
         panel_login.setVisible(true); 
-        System.out.println("Affichage du panel_login");
-        
-        
-        
-    }
+        System.out.println("Affichage du panel_login");          
+    }// Constructeur
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -95,9 +92,13 @@ public class Fenetre extends JFrame {
         MainMenu.add(Menu_Conf);
         setJMenuBar(MainMenu);
         pack();
-    }                      
+    }//initComponents               
 
-    private void editMenuConf() {                                       
+    /* Affiche un boite de dialogue à l'user et récupère l'ip et le port 
+    * entré par celui-ci.
+    */
+    private void editMenuConf() {  
+        // Boitede dialogue
         String url_conf = JOptionPane.showInputDialog(null,
                 "Entrez l'addresse du serveur (ip:port)");
         String[] temp;
@@ -114,12 +115,16 @@ public class Fenetre extends JFrame {
         else port = temp[1];
         
         bdd.editConf(url,port);
+        bdd = new Bdd();
+        
+        // Affichage de controle
         System.out.println(bdd.ip);
         System.out.println(bdd.port);
         System.out.println(bdd.bdd);
-        bdd = new Bdd();  
-    }                                      
+          
+    }//editMenuConf                                  
     
+    // Fonction lancant la connexion avec les paramètres login/mdp saisie par l'user
     private void connexion () {
         String login = panel_login.getLogin();
         String mdp = panel_login.getPassword();
@@ -132,5 +137,5 @@ public class Fenetre extends JFrame {
             panel_consult.setVisible(true);
             System.out.println("Affichage du panel_consult");
        }
-    }
-}
+    }//connexion
+}//Classe Fenetre

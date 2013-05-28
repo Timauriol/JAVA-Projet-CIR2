@@ -12,15 +12,6 @@ import javax.swing.JOptionPane;
  * @author Erza
  */
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Erza
- */
 public class User {
     
     // Variables declaration   
@@ -68,4 +59,4 @@ public class User {
     }//Verif_Auth
        
 
-}
+}//User

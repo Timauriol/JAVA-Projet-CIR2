@@ -52,7 +52,7 @@ public class Bdd {
         System.out.println(ip);
         System.out.println(port);
         System.out.println(bdd);
-    }
+    }//initConf
     
     // Charge puis ferme le fichier de conf, et édite ensuite les valeurs associés au key.
     public void editConf(String ip, String port){
@@ -90,7 +90,7 @@ public class Bdd {
             fis = null;
             config = null;
         }
-    }
+    }//editConf
    
     // Fonction utilisant les paramètre courant de la classe Bdd 
     // pour creer une connexion à une BDD.
@@ -109,5 +109,5 @@ public class Bdd {
             // Affiche un message pour l'utilisateur en cas d'erreur.
             JOptionPane.showMessageDialog(null,"Connection BDD échoué, veuillez éditer correctement les informations de connexion." );
         }
-    }
-}
+    }//BDDConec
+}//Bdd

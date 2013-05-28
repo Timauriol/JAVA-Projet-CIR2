@@ -44,7 +44,5 @@ public class Panel_consult extends JPanel {
         this.add(onglets);
         
         frame.getContentPane().add(this);
-
-
-    }
-}
+    }// initComponents
+}//Panel_consult
