@@ -28,11 +28,13 @@ public class User {
     String nom,prenom;
     int solde_conge,solde_conge_extra;
     
+    // Constructeur
     public User(){
         auth = false;
 
     }
     
+    // Fonction de vérification de la combinaison login/mdp donner par l'utilisateur avec la BDD
     public void verif_Auth(Connection connecBDD,String test_login,String test_password ){
         
         try {
@@ -51,7 +53,7 @@ public class User {
                 auth = true;
                 return;
             }
-            // Affiche un message pour l'utilisateur
+            // Affiche un message pour l'utilisateur en cas d'erreur.
             JOptionPane.showMessageDialog(null,"Combinaison utilisateur / Mot de passe incorrect !" );
             // Retourne false si l'authentification est incorrect
             auth = false; 

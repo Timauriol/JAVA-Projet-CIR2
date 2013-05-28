@@ -3,8 +3,6 @@ package ProjetJAVA;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
- 
 import javax.swing.*;
 
 /**
@@ -13,28 +11,35 @@ import javax.swing.*;
  */
 public class Panel_consult extends JPanel {
     
+    // Constructeur
     public Panel_consult(JFrame frame) {
         initComponents(frame);
         System.out.println("Création du Panel_consult");
         
     }
-        
+    
+   /**
+    * Cette methode est appelé dans le constructeur pour 
+    * initialiser les éléments graphiques.
+    */
     private void initComponents(JFrame frame) {
+        // Ajout du type de layout au panel_consult
         this.setLayout(new BorderLayout());
         JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP);
        
+        // Cration de l'onglet Calendrier
+        JPanel onglet_calendrier = new JPanel();
+        JLabel titreOnglet_calendrier = new JLabel("Calendrier");
+        onglet_calendrier.add(titreOnglet_calendrier);
+        onglet_calendrier.setPreferredSize(new Dimension(500, 500));
+        onglets.addTab("Calendrier", onglet_calendrier);
         
-        JPanel onglet1 = new JPanel();
-        JLabel titreOnglet1 = new JLabel("Onglet 1");
-        onglet1.add(titreOnglet1);
-        onglet1.setPreferredSize(new Dimension(500, 500));
-        onglets.addTab("onglet1", onglet1);
-        
-        JPanel onglet2 = new JPanel();
-        JLabel titreOnglet2 = new JLabel("Onglet 2");
-        onglet2.setPreferredSize(new Dimension(500, 500));
-        onglet2.add(titreOnglet2);
-        onglets.addTab("onglet2", onglet2);
+        // Cration de l'onglet Planning
+        JPanel onglet_planning = new JPanel();
+        JLabel titreOnglet_planning = new JLabel("Planning");
+        onglet_planning.setPreferredSize(new Dimension(500, 500));
+        onglet_planning.add(titreOnglet_planning);
+        onglets.addTab("Planning", onglet_planning);
         onglets.setOpaque(true);
         this.add(onglets);
         

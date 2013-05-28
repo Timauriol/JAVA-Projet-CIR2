@@ -89,7 +89,7 @@ public class Fenetre extends JFrame {
         Menu_Conf.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                Menu_ConfMouseClicked(evt);
+                editMenuConf();
             }
         });
         MainMenu.add(Menu_Conf);
@@ -97,12 +97,22 @@ public class Fenetre extends JFrame {
         pack();
     }                      
 
-    private void Menu_ConfMouseClicked(MouseEvent evt) {                                       
-        String url_conf = JOptionPane.showInputDialog(null, "Entrez l'addresse du serveur (ip:port)");
+    private void editMenuConf() {                                       
+        String url_conf = JOptionPane.showInputDialog(null,
+                "Entrez l'addresse du serveur (ip:port)");
         String[] temp;
         temp = url_conf.split(":");
-        String url = temp[0];
-        String port = temp[1];
+        String url = null;
+        String port = null;
+        if (temp.length != 2){
+            port = "3306";
+            if (temp.length == 1){
+                url = "127.0.0.1";
+            }
+            else url = temp[0];
+        }
+        else port = temp[1];
+        
         bdd.editConf(url,port);
         System.out.println(bdd.ip);
         System.out.println(bdd.port);

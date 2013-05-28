@@ -2,7 +2,6 @@ package ProjetJAVA;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  *
@@ -30,7 +29,8 @@ public class Panel_login extends JPanel {
     }
 
    /**
-    * This method is called from within the constructor to initialize the form.
+    * Cette methode est appelé dans le constructeur pour 
+    * initialiser les éléments graphiques.
     */
                        
     private void initComponents() {
