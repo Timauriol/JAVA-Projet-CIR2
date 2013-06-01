@@ -18,10 +18,10 @@ public class Fenetre extends JFrame {
     // Variables declaration                
     private JMenuBar MainMenu;
     private JMenu Menu_Conf;
-    Panel_login panel_login = new Panel_login();
-    Panel_consult panel_consult = new Panel_consult(this);
-    User user = new User();
-    Bdd bdd = new Bdd();               
+    Panel_login panel_login;
+    Panel_consult panel_consult;
+    User user;
+    Bdd bdd;               
 
     
     // Constructeur
@@ -73,7 +73,11 @@ public class Fenetre extends JFrame {
      */
                      
     private void initComponents() {
-
+        
+        panel_login = new Panel_login();
+        panel_consult = new Panel_consult(this);
+        user = new User();
+        bdd = new Bdd();     
         MainMenu = new JMenuBar();
         Menu_Conf = new JMenu();
 
@@ -105,14 +109,15 @@ public class Fenetre extends JFrame {
         temp = url_conf.split(":");
         String url = null;
         String port = null;
-        if (temp.length != 2){
+        if (temp.length < 2){
             port = "3306";
-            if (temp.length == 1){
-                url = "127.0.0.1";
-            }
-            else url = temp[0];
         }
         else port = temp[1];
+        
+        if (temp[0].length() == 0){
+            url = "127.0.0.1";
+        }
+        else url = temp[0];
         
         bdd.editConf(url,port);
         bdd = new Bdd();
@@ -134,6 +139,8 @@ public class Fenetre extends JFrame {
             panel_login.setVisible(false);
             System.out.println("On Masque le panel_login");
             this.add("Center", panel_consult); // Ajout du Panel_consult à la fenetre
+            //setMinimumSize(new Dimension(900, 900));
+            //setPreferredSize(new Dimension(800, 800));
             panel_consult.setVisible(true);
             System.out.println("Affichage du panel_consult");
        }

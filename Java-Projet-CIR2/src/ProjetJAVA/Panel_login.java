@@ -46,8 +46,6 @@ public class Panel_login extends JPanel {
 
         // Layout
         GridBagLayout layout = new GridBagLayout();
-        layout.columnWidths = new int[] {0};
-        layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         setLayout(layout);
 
         jLabel_Auth.setText("Authentification");
