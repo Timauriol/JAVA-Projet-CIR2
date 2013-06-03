@@ -104,22 +104,33 @@ public class Fenetre extends JFrame {
     private void editMenuConf() {  
         // Boitede dialogue
         String url_conf = JOptionPane.showInputDialog(null,
-                "Entrez l'addresse du serveur (ip:port)");
+                "Entrez l'addresse du serveur (ip:port/bdd)");
         String[] temp;
-        temp = url_conf.split(":");
+        String[] temp1;
+        temp = url_conf.split("/");
+        temp1 = temp[0].split(":");
+
         String url = null;
         String port = null;
-        if (temp.length < 2){
-            port = "3306";
-        }
-        else port = temp[1];
+        String bdd_name = null;
         
-        if (temp[0].length() == 0){
+        if ( temp.length == 2){
+        	bdd_name = temp[1];
+        }
+        else bdd_name = "conge";
+ 
+        if (temp1.length == 2){
+        	port = temp1[1];
+        }
+        else port = "3306";
+        
+        if (temp1[0].length() == 0){
             url = "127.0.0.1";
+                        
         }
-        else url = temp[0];
+        else url = temp1[0];
         
-        bdd.editConf(url,port);
+        bdd.editConf(url,port,bdd_name);
         bdd = new Bdd();
         
         // Affichage de controle

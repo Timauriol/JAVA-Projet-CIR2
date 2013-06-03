@@ -49,10 +49,10 @@ public class User {
             // Retourne false si l'authentification est incorrect
             auth = false; 
             
-        }catch(SQLException | HeadlessException ex) {
+        }catch(SQLException | HeadlessException | NullPointerException ex) {
             ex.printStackTrace();
             // Affiche un message pour l'utilisateur
-            JOptionPane.showMessageDialog(null,"Connexion à la BDD échoué" );
+            JOptionPane.showMessageDialog(null,"Connexion à la BDD échouée" );
             // Retourne false si il y a une erreur avec la BDD
             auth = false;
         }       

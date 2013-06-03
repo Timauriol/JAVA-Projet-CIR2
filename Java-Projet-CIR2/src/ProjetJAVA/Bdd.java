@@ -19,7 +19,7 @@ public class Bdd {
     // Declaration des variables
     Connection connecBDD;
     String ip,bdd,port;
-    String configPath = System.getProperty("user.dir") + "\\src\\ProjetJAVA\\" + "config.txt";
+    String configPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "config.txt";
     
     //Constructeur
     public Bdd(){
@@ -55,7 +55,7 @@ public class Bdd {
     }//initConf
     
     // Charge puis ferme le fichier de conf, et édite ensuite les valeurs associés au key.
-    public void editConf(String ip, String port){
+    public void editConf(String ip, String port,String bdd_name){
         FileOutputStream fos = null;
         Properties config = null;
         FileInputStream fis = null;
@@ -79,6 +79,7 @@ public class Bdd {
             // Edite les valeurs du fichier de conf
             config.setProperty("ip",ip);
             config.setProperty("port",port);
+            config.setProperty("bdd",bdd_name);
             config.store(fos, "Dernière mise a jour :");
             fos.close();
         }
