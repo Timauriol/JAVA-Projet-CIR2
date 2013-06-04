@@ -1,9 +1,22 @@
 package ProjetJAVA;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+
+
 
 /**
  *
@@ -81,6 +94,7 @@ public class Fenetre extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Super Congés 2000");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("favicon.png")); 
         setMinimumSize(new Dimension(250, 250));
         setPreferredSize(new Dimension(500, 500));
 
