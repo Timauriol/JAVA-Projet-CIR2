@@ -10,31 +10,30 @@ import java.awt.event.*;
  * @author Erza
  */
 public class Fenetre extends JFrame {
-    
+
     /**
      * Creates new form Fenetre
      */
-    
+
     // Variables declaration                
     private JMenuBar MainMenu;
     private JMenu Menu_Conf;
     Panel_login panel_login;
     Panel_consult panel_consult;
     User user;
-    Bdd bdd;               
 
-    
+
     // Constructeur
     public Fenetre() {
         initComponents(); // Initialisation de la fenetre
         System.out.println("Fenêtre principal généré");
         this.add("Center", panel_login); // Ajout du Panel_login à la fenetre
-        
+
         panel_consult.setVisible(false);
-        
+
         // On récupère le boutton panel_login
         JButton button_connexion = panel_login.getJButton();   
-        
+
         // On redéfinit le comportement du boutton
         button_connexion.addActionListener(new ActionListener() {
             @Override
@@ -42,7 +41,7 @@ public class Fenetre extends JFrame {
                 connexion();
             }
         });
-        
+
         // On récupère le jTextField_Login
         JTextField jTextField_Login =  panel_login.getJTextField_Login();
         // On redéfinit le comportement du jTextField_Login
@@ -52,7 +51,7 @@ public class Fenetre extends JFrame {
                 connexion(); 
             }
         });
-        
+
         // On récupère le jPasswordField
         JPasswordField jPasswordField = panel_login.getJPasswordField();
         // On redéfinit le comportement du jPasswordField
@@ -62,7 +61,7 @@ public class Fenetre extends JFrame {
                 connexion(); 
             }
         });
-        
+
         // Affichage du Panel_login
         panel_login.setVisible(true); 
         System.out.println("Affichage du panel_login");          
@@ -71,13 +70,12 @@ public class Fenetre extends JFrame {
     /**
      * This method is called from within the constructor to initialize the form.
      */
-                     
+
     private void initComponents() {
-        
+
         panel_login = new Panel_login();
-        panel_consult = new Panel_consult(this);
         user = new User();
-        bdd = new Bdd();     
+        panel_consult = new Panel_consult(this, user);
         MainMenu = new JMenuBar();
         Menu_Conf = new JMenu();
 
@@ -96,11 +94,11 @@ public class Fenetre extends JFrame {
         MainMenu.add(Menu_Conf);
         setJMenuBar(MainMenu);
         pack();
-    }//initComponents               
+    }//initComponents
 
     /* Affiche un boite de dialogue à l'user et récupère l'ip et le port 
-    * entré par celui-ci.
-    */
+     * entré par celui-ci.
+     */
     private void editMenuConf() {  
         // Boitede dialogue
         String url_conf = JOptionPane.showInputDialog(null,
@@ -113,47 +111,47 @@ public class Fenetre extends JFrame {
         String url = null;
         String port = null;
         String bdd_name = null;
-        
+
         if ( temp.length == 2){
-        	bdd_name = temp[1];
+            bdd_name = temp[1];
         }
         else bdd_name = "conge";
- 
+
         if (temp1.length == 2){
-        	port = temp1[1];
+            port = temp1[1];
         }
         else port = "3306";
-        
+
         if (temp1[0].length() == 0){
             url = "127.0.0.1";
-                        
+
         }
         else url = temp1[0];
-        
+
+        Bdd bdd = Bdd.getInstance();
         bdd.editConf(url,port,bdd_name);
-        bdd = new Bdd();
-        
+        bdd.initConf();
+
         // Affichage de controle
         System.out.println(bdd.ip);
         System.out.println(bdd.port);
         System.out.println(bdd.bdd);
-          
-    }//editMenuConf                                  
-    
+
+    }//editMenuConf
+
     // Fonction lancant la connexion avec les paramètres login/mdp saisie par l'user
     private void connexion () {
         String login = panel_login.getLogin();
         String mdp = panel_login.getPassword();
-        user.verif_Auth(bdd.connecBDD,login,mdp);
-        
-       if (user.auth){
+        user.verifAuth(login,mdp);
+
+        if (user.auth){
             panel_login.setVisible(false);
             System.out.println("On Masque le panel_login");
+            panel_consult.onglet_calendrier.majSolde();
             this.add("Center", panel_consult); // Ajout du Panel_consult à la fenetre
-            //setMinimumSize(new Dimension(900, 900));
-            //setPreferredSize(new Dimension(800, 800));
             panel_consult.setVisible(true);
             System.out.println("Affichage du panel_consult");
-       }
+        }
     }//connexion
 }//Classe Fenetre

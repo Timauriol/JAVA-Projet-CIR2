@@ -15,52 +15,63 @@ import javax.swing.JOptionPane;
  * @author Erza
  */
 public class Bdd {
-    
+
     // Declaration des variables
     Connection connecBDD;
     String ip,bdd,port;
     String configPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "config.txt";
-    
+    static Bdd instance = null;
+
     //Constructeur
     public Bdd(){
         super();
         initConf();
-        BDDConec();   
         System.out.println("Objet BDD construit.");
     }
-    
-    // Chargement et lecture du fichier de configuration 
+
+    public static Bdd getInstance(){
+        if(instance == null){
+            System.out.println("Création d'une Bdd");
+            instance = new Bdd();
+            instance.initConf();
+        }
+        return instance;
+    }
+
+    // Chargement et lecture du fichier de configuration
     public void initConf() {
         Properties properties = new Properties();
-        
-        // Chemin d'accès du ficher de congiguration  
+
+        // Chemin d'accès du ficher de congiguration
         try {
             FileInputStream fileStream = new FileInputStream(configPath);
             properties.load(fileStream);
-            
+
             // On récupère les imformations donner par le fichier de configuration
             ip = properties.getProperty("ip");
             port = properties.getProperty("port");
             bdd = properties.getProperty("bdd");
             fileStream.close();
-            System.out.println("Fchier de configuration chargé.");
+            System.out.println("Fichier de configuration chargé.");
         } catch (IOException e) {
             System.out.println("Unable to load config file.");
         }
-        
+
         // Affichage pour controler les valeurs
         System.out.println(ip);
         System.out.println(port);
         System.out.println(bdd);
+
+        BDDConec();
     }//initConf
-    
+
     // Charge puis ferme le fichier de conf, et édite ensuite les valeurs associés au key.
     public void editConf(String ip, String port,String bdd_name){
         FileOutputStream fos = null;
         Properties config = null;
         FileInputStream fis = null;
-        
-         try {
+
+        try {
             config = new Properties();
             if (configPath != null) {
                 File fileRes = new File(configPath);
@@ -92,12 +103,12 @@ public class Bdd {
             config = null;
         }
     }//editConf
-   
-    // Fonction utilisant les paramètre courant de la classe Bdd 
+
+    // Fonction utilisant les paramètre courant de la classe Bdd
     // pour creer une connexion à une BDD.
     public void BDDConec() {
-        
-        // On initialise la connection à la BDD    
+
+        // On initialise la connection à la BDD
         Properties props = new Properties();
         props.put("user", "conge");
         props.put("password", "conge");
@@ -108,7 +119,7 @@ public class Bdd {
             } catch (SQLException e) {
             e.printStackTrace();
             // Affiche un message pour l'utilisateur en cas d'erreur.
-            JOptionPane.showMessageDialog(null,"Connection BDD échoué, veuillez éditer correctement les informations de connexion." );
+            JOptionPane.showMessageDialog(null,"Echec de la connexion à la BDD, veuillez corriger les informations de connexion." );
         }
     }//BDDConec
 }//Bdd

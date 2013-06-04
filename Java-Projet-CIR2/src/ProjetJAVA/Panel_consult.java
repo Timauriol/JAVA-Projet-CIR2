@@ -11,14 +11,16 @@ import javax.swing.*;
  */
 public class Panel_consult extends JPanel {
     
-    // Déclaration 
+    // Déclaration
     private JTabbedPane onglets;
-    
+    private User user;
+    public Onglet_calendrier onglet_calendrier;
+
     // Constructeur
-    public Panel_consult(JFrame frame) {
+    public Panel_consult(JFrame frame, User user) {
+        this.user = user;
         initComponents(frame);
         System.out.println("Création du Panel_consult");
-
     }
 
     /**
@@ -31,7 +33,7 @@ public class Panel_consult extends JPanel {
         onglets = new JTabbedPane(SwingConstants.TOP);
 
         // Creation de l'onglet Calendrier
-        Onglet_calendrier onglet_calendrier = new Onglet_calendrier();
+        onglet_calendrier = new Onglet_calendrier(user);
         //onglet_calendrier.setPreferredSize(new Dimension(500, 500));
         onglets.addTab("Calendrier", onglet_calendrier);
 
