@@ -4,6 +4,13 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.URI;
+import java.awt.Desktop;
+
+import java.net.URISyntaxException;
+import java.io.IOException;
 
 /**
  *
@@ -38,8 +45,17 @@ public class Panel_consult extends JPanel {
         onglets.addTab("Calendrier", onglet_calendrier);
 
         JLabel lien = new JLabel("<html><a href='http://crouton.net/'>Télécharger le formulaire de congé</a></html>");
-
         this.add(lien, BorderLayout.SOUTH);
+        lien.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                try{
+                    Desktop.getDesktop().browse(new URI("http://crouton.net/"));
+                } catch (URISyntaxException | IOException ex) {
+                    System.out.println("caca");
+                }
+            }
+        });
 
 
         // Creation de l'onglet Planning
