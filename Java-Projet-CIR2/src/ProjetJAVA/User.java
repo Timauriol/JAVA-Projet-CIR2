@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class User {
 
     // Variables declaration
+    public String login;
     public boolean auth;
     public String nomprenom;
     public int solde;
@@ -42,6 +43,7 @@ public class User {
 
             //Verifie si la requête à trouvé un utilisateur
             if (result.next()){
+                this.login = test_login;
                 nomprenom = result.getString(1);
                 solde = result.getInt(2);
                 auth = true;

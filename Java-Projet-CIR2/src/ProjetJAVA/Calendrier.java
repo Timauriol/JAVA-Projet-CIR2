@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
@@ -12,12 +13,12 @@ import javax.swing.border.MatteBorder;
 
 class Calendrier extends JPanel {
 
-    JPanel[] jours;
+    Jour[] jours;
     JLabel[] labelsJours;
 
     public Calendrier(int annee, int mois){
         construire();
-        afficherMois(annee, mois);
+        afficherMois(annee, mois, new ArrayList<Conge>());
     }
 
     private void construire(){
@@ -39,13 +40,12 @@ class Calendrier extends JPanel {
             semaine.add(jour);
         }
 
-        jours = new JPanel[6*7];
+        jours = new Jour[6*7];
         labelsJours = new JLabel[6*7];
 
         for(int i = 0; i < 6*7; i++){
-            jours[i] = new JPanel(new BorderLayout());
-            labelsJours[i] = new JLabel();
-            jours[i].add(labelsJours[i], BorderLayout.NORTH);
+            jours[i] = new Jour();
+            labelsJours[i] = jours[i].num_jour;
             /* bordures */
             /* il y a surement un moyen moins dégeulasse de faire ça */
             if(i == 0)
@@ -63,7 +63,7 @@ class Calendrier extends JPanel {
         this.add(mois, BorderLayout.CENTER);
     }
 
-    public void afficherMois(int annee, int mois){
+    public void afficherMois(int annee, int mois, ArrayList<Conge> conges){
         GregorianCalendar cal = new GregorianCalendar(annee, mois, 1);
         cal.setFirstDayOfWeek(Calendar.MONDAY);
         /* On rembobine jusqu'au lundi qui précède le début du mois */
@@ -72,14 +72,44 @@ class Calendrier extends JPanel {
         for(int i = 0; i < this.jours.length; i++){
             if(mois == cal.get(Calendar.MONTH)){
                 labelsJours[i].setForeground(Color.black);
-                jours[i].setBackground(new Color(0xeeeeee));
+                jours[i].setBackground(Color.white);
+                jours[i].transparent = false;
             }
             else{
                 labelsJours[i].setForeground(Color.gray);
-                jours[i].setBackground(Color.white);
+                jours[i].setBackground(new Color(0xf6f6f6));
+                jours[i].transparent = true;
             }
+
+            jours[i].couleur_am = null;
+            jours[i].couleur_pm = null;
+
+            for(int j = 0; j < conges.size(); j++){
+                cal.set(Calendar.HOUR, 0);
+                if(conges.get(j).date.equals(cal)){
+                    if(conges.get(j).type.equals("weekend"))
+                        jours[i].couleur_am = new Color(0x99ccff);
+                    else if(conges.get(j).type.equals("ferie"))
+                        jours[i].couleur_am = new Color(0xffdd88);
+                    else
+                        jours[i].couleur_am = new Color(0x88ee66);
+                }
+                cal.set(Calendar.HOUR, 12);
+                if(conges.get(j).date.equals(cal)){
+                    if(conges.get(j).type.equals("weekend"))
+                        jours[i].couleur_pm = new Color(0x99ccff);
+                    else if(conges.get(j).type.equals("ferie"))
+                        jours[i].couleur_pm = new Color(0xffdd88);
+                    else
+                        jours[i].couleur_pm = new Color(0x88ee66);
+                }
+                cal.set(Calendar.HOUR, 0);
+            }
+
             labelsJours[i].setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
             cal.add(Calendar.DAY_OF_YEAR, 1);
+
+            jours[i].repaint();
         }
     }
 }

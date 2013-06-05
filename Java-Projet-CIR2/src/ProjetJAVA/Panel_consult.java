@@ -37,6 +37,10 @@ public class Panel_consult extends JPanel {
         //onglet_calendrier.setPreferredSize(new Dimension(500, 500));
         onglets.addTab("Calendrier", onglet_calendrier);
 
+        JLabel lien = new JLabel("<html><a href='http://crouton.net/'>Télécharger le formulaire de congé</a></html>");
+
+        this.add(lien, BorderLayout.SOUTH);
+
 
         // Creation de l'onglet Planning
         JPanel onglet_planning = new JPanel();
@@ -47,6 +51,7 @@ public class Panel_consult extends JPanel {
 
         onglets.setOpaque(true);
         this.add(onglets);
+
 
         frame.getContentPane().add(this);
     }// initComponents

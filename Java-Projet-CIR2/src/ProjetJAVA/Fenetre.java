@@ -61,7 +61,7 @@ public class Fenetre extends JFrame {
         jTextField_Login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                connexion(); 
+                connexion();
             }
         });
 
@@ -163,6 +163,7 @@ public class Fenetre extends JFrame {
             panel_login.setVisible(false);
             System.out.println("On Masque le panel_login");
             panel_consult.onglet_calendrier.majSolde();
+            panel_consult.onglet_calendrier.majCalendrier();
             this.add("Center", panel_consult); // Ajout du Panel_consult à la fenetre
             panel_consult.setVisible(true);
             System.out.println("Affichage du panel_consult");

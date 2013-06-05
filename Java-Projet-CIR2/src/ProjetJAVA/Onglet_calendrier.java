@@ -58,6 +58,10 @@ public class Onglet_calendrier extends JPanel {
         this.add(calendrier, BorderLayout.CENTER);
     }//initComponents
 
+    public void majCalendrier(){
+        calendrier.afficherMois(annee, mois, Conge.getCongesMois(user.login, annee, mois));
+    }
+
     public void majSolde(){
         this.solde.setText("Solde courant : " + String.valueOf(user.solde));
     }
@@ -80,8 +84,7 @@ public class Onglet_calendrier extends JPanel {
         selecteur.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 mois = selecteur.getSelectedIndex();
-                // TODO aller chercher les congés
-                calendrier.afficherMois(annee, mois);
+                majCalendrier();
                 if(mois == 0) precedent.setEnabled(false);
                 else precedent.setEnabled(true);
                 if(mois == 11) suivant.setEnabled(false);
