@@ -32,8 +32,7 @@ public class Bdd {
     public static Bdd getInstance(){
         if(instance == null){
             System.out.println("Création d'une Bdd");
-            instance = new Bdd();
-            instance.initConf();
+            instance = new Bdd();            
         }
         return instance;
     }
@@ -54,7 +53,9 @@ public class Bdd {
             fileStream.close();
             System.out.println("Fichier de configuration chargé.");
         } catch (IOException e) {
-            System.out.println("Unable to load config file.");
+            System.out.println("Impossibilité de charger le fichier de configuation.");
+            System.out.println("Creation d'un fichier de configuration par défault");
+            editConf("127.0.0.1","3306","conge");
         }
 
         // Affichage pour controler les valeurs
@@ -91,6 +92,9 @@ public class Bdd {
             config.setProperty("ip",ip);
             config.setProperty("port",port);
             config.setProperty("bdd",bdd_name);
+            this.ip = ip;
+            this.port = port;
+            this.bdd = bdd_name;
             config.store(fos, "Dernière mise a jour :");
             fos.close();
         }
@@ -102,6 +106,8 @@ public class Bdd {
             fis = null;
             config = null;
         }
+        
+        
     }//editConf
 
     // Fonction utilisant les paramètre courant de la classe Bdd
