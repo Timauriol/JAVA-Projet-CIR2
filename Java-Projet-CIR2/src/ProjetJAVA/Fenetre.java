@@ -114,7 +114,9 @@ public class Fenetre extends JFrame {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try{
-                    Desktop.getDesktop().browse(new URI("http://crouton.net/"));
+                    Config c = Config.getInstance();
+                    c.charger();
+                    Desktop.getDesktop().browse(new URI(c.urlPdf));
                 } catch (URISyntaxException | IOException ex) {
                 }
             }
@@ -131,8 +133,8 @@ public class Fenetre extends JFrame {
     /* Affiche un boite de dialogue à l'user et récupère l'ip et le port 
      * entré par celui-ci.
      */
-    private void editMenuConf() {  
-        // Boitede dialogue
+    private void editMenuConf() {
+        // Boite de dialogue
         String url_conf = JOptionPane.showInputDialog(null,
                 "Entrez l'addresse du serveur (ip:port/bdd)");
         String[] temp;
@@ -163,11 +165,6 @@ public class Fenetre extends JFrame {
         Bdd bdd = Bdd.getInstance();
         bdd.editConf(url,port,bdd_name);
         bdd.initConf();
-
-        // Affichage de controle
-        System.out.println(bdd.ip);
-        System.out.println(bdd.port);
-        System.out.println(bdd.bdd);
 
     }//editMenuConf
 

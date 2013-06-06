@@ -1,13 +1,13 @@
 package ProjetJAVA;
 
+import java.util.Properties;
+/*
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+*/
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
-import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,82 +32,38 @@ public class Bdd {
     public static Bdd getInstance(){
         if(instance == null){
             System.out.println("Création d'une Bdd");
-            instance = new Bdd();            
+            instance = new Bdd();
         }
         return instance;
     }
 
     // Chargement et lecture du fichier de configuration
     public void initConf() {
-        Properties properties = new Properties();
+        Config c = Config.getInstance();
+        c.charger();
 
-        // Chemin d'accès du ficher de congiguration
-        try {
-            FileInputStream fileStream = new FileInputStream(configPath);
-            properties.load(fileStream);
-
-            // On récupère les imformations donner par le fichier de configuration
-            ip = properties.getProperty("ip");
-            port = properties.getProperty("port");
-            bdd = properties.getProperty("bdd");
-            fileStream.close();
-            System.out.println("Fichier de configuration chargé.");
-        } catch (IOException e) {
-            System.out.println("Impossibilité de charger le fichier de configuation.");
-            System.out.println("Creation d'un fichier de configuration par défault");
-            editConf("127.0.0.1","3306","conge");
-        }
-
-        // Affichage pour controler les valeurs
-        System.out.println(ip);
-        System.out.println(port);
-        System.out.println(bdd);
+        this.ip = c.ip;
+        this.port = c.port;
+        this.bdd = c.bdd;
 
         BDDConec();
     }//initConf
 
     // Charge puis ferme le fichier de conf, et édite ensuite les valeurs associés au key.
-    public void editConf(String ip, String port,String bdd_name){
-        FileOutputStream fos = null;
-        Properties config = null;
-        FileInputStream fis = null;
+    public void editConf(String ip, String port, String bdd){
+        this.ip = ip;
+        this.port = port;
+        this.bdd = bdd;
 
-        try {
-            config = new Properties();
-            if (configPath != null) {
-                File fileRes = new File(configPath);
-                if (fileRes.isFile()) {
-                    fis = new FileInputStream(configPath);
-                    config.load(fis);
-                    fis.close();
-                }
-            }
-            if (fis == null) {
-                fos = new FileOutputStream(configPath, true);
-            }
-            else {
-                fos = new FileOutputStream(configPath);
-            }
-            // Edite les valeurs du fichier de conf
-            config.setProperty("ip",ip);
-            config.setProperty("port",port);
-            config.setProperty("bdd",bdd_name);
-            this.ip = ip;
-            this.port = port;
-            this.bdd = bdd_name;
-            config.store(fos, "Dernière mise a jour :");
-            fos.close();
+        Config c = Config.getInstance();
+        c.ip = ip;
+        c.port = port;
+        c.bdd = bdd;
+        try{
+            c.enregistrer();
+        } catch (IOException e){
+            System.out.println("Impossible d'écrire le fichier de configuration");
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            fos = null;
-            fis = null;
-            config = null;
-        }
-        
-        
     }//editConf
 
     // Fonction utilisant les paramètre courant de la classe Bdd
@@ -121,7 +77,7 @@ public class Bdd {
         try {
             // Creation de la connexion
             connecBDD = DriverManager.getConnection("jdbc:mysql://"+ip+":"+port+"/"+bdd, props);
-            System.out.println("Connexion à la BDD réussi.");
+            System.out.println("Connexion à la BDD réussie.");
             } catch (SQLException e) {
             e.printStackTrace();
             // Affiche un message pour l'utilisateur en cas d'erreur.
