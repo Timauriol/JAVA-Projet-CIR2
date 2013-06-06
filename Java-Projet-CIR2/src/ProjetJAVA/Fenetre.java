@@ -35,7 +35,7 @@ public class Fenetre extends JFrame {
     // Variables declaration                
     private JMenuBar MainMenu;
     Panel_login panel_login;
-    Panel_consult panel_consult;
+    Panel_calendrier panel_calendrier;
     User user;
 
 
@@ -45,7 +45,7 @@ public class Fenetre extends JFrame {
         System.out.println("Fenêtre principal généré");
         this.add("Center", panel_login); // Ajout du Panel_login à la fenetre
 
-        panel_consult.setVisible(false);
+        panel_calendrier.setVisible(false);
 
         // On récupère le boutton panel_login
         JButton button_connexion = panel_login.getJButton();   
@@ -91,7 +91,7 @@ public class Fenetre extends JFrame {
 
         panel_login = new Panel_login();
         user = new User();
-        panel_consult = new Panel_consult(this, user);
+        panel_calendrier = new Panel_calendrier(this, user);
         MainMenu = new JMenuBar();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -180,11 +180,11 @@ public class Fenetre extends JFrame {
         if (user.auth){
             panel_login.setVisible(false);
             System.out.println("On Masque le panel_login");
-            panel_consult.onglet_calendrier.majSolde();
-            panel_consult.onglet_calendrier.majCalendrier();
-            this.add("Center", panel_consult); // Ajout du Panel_consult à la fenetre
-            panel_consult.setVisible(true);
-            System.out.println("Affichage du panel_consult");
+            panel_calendrier.majSolde();
+            panel_calendrier.majCalendrier();
+            this.add("Center", panel_calendrier); // Ajout du Panel_calendrier à la fenetre
+            panel_calendrier.setVisible(true);
+            System.out.println("Affichage du panel_calendrier");
         }
     }//connexion
 }//Classe Fenetre

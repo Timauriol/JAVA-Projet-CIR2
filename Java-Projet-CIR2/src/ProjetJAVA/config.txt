@@ -1,5 +1,0 @@
-#Dernière mise a jour :
-#Sat Jun 01 18:15:48 CEST 2013
-port=3306
-bdd=conge
-ip=127.0.0.1
