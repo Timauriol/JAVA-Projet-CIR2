@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ProjetJAVA;
 
 import java.awt.BorderLayout;
@@ -16,10 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Erza
- */
 public class Panel_calendrier extends JPanel {
 
     // Variables declaration
@@ -45,15 +37,11 @@ public class Panel_calendrier extends JPanel {
      * initialiser les éléments graphiques.
      */
     private void initComponents(JFrame frame) {
-        System.out.println("initComponents");
 
         setLayout(new BorderLayout());
-
         JPanel barreoutils = new JPanel(new BorderLayout());
-
-        calendrier = new Calendrier(annee, mois);
-
         initBarreOutils(barreoutils);
+        calendrier = new Calendrier(annee, mois);
 
         this.add(barreoutils, BorderLayout.NORTH);
         this.add(calendrier, BorderLayout.CENTER);
@@ -61,19 +49,23 @@ public class Panel_calendrier extends JPanel {
         frame.getContentPane().add(this);
     }//initComponents
 
+    // Met à jour le calendrier au mois et année correspondante.
     public void majCalendrier(){
         calendrier.afficherMois(annee, mois, Conge.getCongesMois(user.login, annee, mois));
     }
 
+    // Met à jour le solde de l'utilisateur
     public void majSolde(){
         this.solde.setText("Solde courant : " + String.valueOf(user.solde));
     }
 
+    // Initialisation des composants de la barre d'outil
     private void initBarreOutils(JPanel barre){
         solde = new JLabel();
-
+        
         String[] nom_mois = { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" };
         String[] mois_annee = new String[12];
+        
         for(int i = 0; i < nom_mois.length; i++)
             mois_annee[i] = nom_mois[i] + " " + String.valueOf(annee);
 
@@ -84,7 +76,10 @@ public class Panel_calendrier extends JPanel {
         suivant = new JButton(">");
 
         selecteur.setSelectedIndex(mois);
+        
+        // Comportemement des actions sur le JComboBox selecteur
         selecteur.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 mois = selecteur.getSelectedIndex();
                 majCalendrier();
@@ -94,17 +89,24 @@ public class Panel_calendrier extends JPanel {
                 else suivant.setEnabled(true);
             }
         });
+        
+        // Comportemement des actions sur le JButton precedent
         precedent.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 selecteur.setSelectedIndex(Math.max(0, selecteur.getSelectedIndex() - 1));
             }
         });
+        
+        // Comportemement des actions sur le JButton suivant
         suivant.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 selecteur.setSelectedIndex(Math.min(11, selecteur.getSelectedIndex() + 1));
             }
         });
 
+        // Ajout des elements à la barre d'outil 
         barre.add(solde, BorderLayout.WEST);
         barre_de_droite.add(selecteur);
         barre_de_droite.add(precedent);

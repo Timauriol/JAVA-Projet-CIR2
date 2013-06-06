@@ -1,12 +1,13 @@
 package ProjetJAVA;
 
-import javax.swing.*;
-import java.awt.*;
-
-/**
- *
- * @author Erza
- */
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class Panel_login extends JPanel {
 
@@ -18,21 +19,13 @@ public class Panel_login extends JPanel {
     private JPasswordField jPasswordField;
     private JTextField jTextField_Login;  
     
-    
-    /**
-     * Creates new form Fen
-     */
+    // Constructeur
     public Panel_login() {
         initComponents();
-        System.out.println("Création du Panel_login");
-        
+        System.out.println("Création du Panel_login");  
     }
 
-   /**
-    * Cette methode est appelé dans le constructeur pour 
-    * initialiser les éléments graphiques.
-    */
-                       
+    // Initialisation des composants graphique du panel_login
     private void initComponents() {
         GridBagConstraints gridBagConstraints;
         
@@ -62,7 +55,6 @@ public class Panel_login extends JPanel {
         
         // Dimension
         jTextField_Login.setMinimumSize(new Dimension(125, 22));
-        jTextField_Login.setName(""); // NOI18N
         jTextField_Login.setPreferredSize(new Dimension(125, 22));
 
         gridBagConstraints = new GridBagConstraints();
@@ -90,18 +82,19 @@ public class Panel_login extends JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
         add(jButton_Connexion, gridBagConstraints);
-    }// </editor-fold>                        
+    }// initComponents                      
     
     // Getter sur Login
     public String getLogin() {
         String login = jTextField_Login.getText();
         return login;
     }
+    
     // Getter sur Password
     public String getPassword() {
-    char[] mdp_buff = jPasswordField.getPassword();
-    String mdp = new String (mdp_buff);
-    return mdp;
+        char[] mdp_buff = jPasswordField.getPassword();
+        String mdp = new String (mdp_buff);
+        return mdp;
     } 
     
     // Getter sur JButton
@@ -111,12 +104,11 @@ public class Panel_login extends JPanel {
     
     // Getter sur JTextField
     public JTextField getJTextField_Login() {
-    return jTextField_Login;
+        return jTextField_Login;
     }
     
     // Getter sur JPassword
     public JPasswordField getJPasswordField() {
-    return jPasswordField;
-    } 
-            
+        return jPasswordField;
+    }        
 }

@@ -4,33 +4,32 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
-
-
-
 class Conge{
+    
+    // Déclaration
     public String type;
     public Calendar date;
 
+    // Constructeur
     public Conge(Calendar date, String type){
         this.date = date;
         this.type = type;
     }
 
+    // Retourne une liste de congé correspondant aux paramètres passés.
     public static ArrayList<Conge> getCongesMois(String login, int annee, int mois){
         try{
             Connection connecBDD = Bdd.getInstance().connecBDD;
 
             String sql = "SELECT type, EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date),"
                     + " EXTRACT(DAY FROM date), EXTRACT(HOUR FROM date) FROM conges WHERE login = ? AND date >= ? AND date <= ?";
-            // On prépare la requête
+            
             PreparedStatement statement = connecBDD.prepareStatement(sql);
-            // On assigne les types des paramètres
             statement.setString(1, login);
             statement.setString(2,
                     String.valueOf(annee + (mois==0?-1:0)) + "-" +
@@ -40,10 +39,11 @@ class Conge{
                     String.valueOf(annee + (mois==11?1:0)) + "-" +
                     String.valueOf(((mois+1)%12)+1) + "-14"
                     );
-            // Exécution de la requête
             ResultSet result = statement.executeQuery();
 
-            ArrayList<Conge> conges = new ArrayList<Conge>();
+            ArrayList<Conge> conges = new ArrayList<>();
+            
+            // Boucle de traitement des valeur de la réponse SQL
             while(result.next()){
                 String type = result.getString(1);
                 Calendar date = new GregorianCalendar(result.getInt(2), result.getInt(3) - 1, result.getInt(4), result.getInt(5), 0, 0);
@@ -55,7 +55,8 @@ class Conge{
         }
         catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Connexion à la BDD perdue");
-            return new ArrayList<Conge>();
+            // Retourne un tableau vide en cas d'erreur.
+            return new ArrayList<>();
         }
     }
 }

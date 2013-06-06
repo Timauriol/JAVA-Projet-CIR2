@@ -2,7 +2,6 @@ package ProjetJAVA;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
@@ -13,24 +12,25 @@ import javax.swing.border.MatteBorder;
 
 class Calendrier extends JPanel {
 
+    // Déclaration
     Jour[] jours;
     JLabel[] labelsJours;
 
+    // Constructeur
     public Calendrier(int annee, int mois){
         construire();
         afficherMois(annee, mois, new ArrayList<Conge>());
     }
 
+    // Méthode d'initialisation du calandrier
     private void construire(){
         this.setLayout(new BorderLayout(0,0));
         JPanel semaine = new JPanel(new GridLayout(1, 7));
         JPanel mois = new JPanel(new GridLayout(6, 7));
 
-        /*mois.setBackground(Color.red);
-        semaine.setBackground(Color.green);*/
-
         String[] nomsJours = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
 
+        // Affichage des noms des jours de la semaine dans le JPanel semaine.
         for(int i = 0; i < nomsJours.length; i++){
             JLabel jour = new JLabel(nomsJours[i], JLabel.CENTER);
             if(i == 0)
@@ -42,7 +42,8 @@ class Calendrier extends JPanel {
 
         jours = new Jour[6*7];
         labelsJours = new JLabel[6*7];
-
+        
+        // Affichage des numéros des jours du mois dans le JPanel mois.
         for(int i = 0; i < 6*7; i++){
             jours[i] = new Jour();
             labelsJours[i] = jours[i].num_jour;
@@ -63,12 +64,15 @@ class Calendrier extends JPanel {
         this.add(mois, BorderLayout.CENTER);
     }
 
-    public void afficherMois(int annee, int mois, ArrayList<Conge> conges){
+    // Affiche dans le calendrier les jours du mois et les congés envoyé en paramètres.
+    public final void afficherMois(int annee, int mois, ArrayList<Conge> conges){
         GregorianCalendar cal = new GregorianCalendar(annee, mois, 1);
         cal.setFirstDayOfWeek(Calendar.MONDAY);
+        
         /* On rembobine jusqu'au lundi qui précède le début du mois */
         while(cal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
             cal.add(Calendar.DAY_OF_YEAR, -1);
+        
         for(int i = 0; i < this.jours.length; i++){
             if(mois == cal.get(Calendar.MONTH)){
                 labelsJours[i].setForeground(Color.black);
@@ -85,23 +89,35 @@ class Calendrier extends JPanel {
             jours[i].couleur_pm = null;
 
             for(int j = 0; j < conges.size(); j++){
+                
                 cal.set(Calendar.HOUR, 0);
                 if(conges.get(j).date.equals(cal)){
-                    if(conges.get(j).type.equals("weekend"))
-                        jours[i].couleur_am = new Color(0x99ccff);
-                    else if(conges.get(j).type.equals("ferie"))
-                        jours[i].couleur_am = new Color(0xffdd88);
-                    else
-                        jours[i].couleur_am = new Color(0x88ee66);
+                    switch (conges.get(j).type) {
+                        case "weekend":
+                            jours[i].couleur_am = new Color(0x99ccff);
+                            break;
+                        case "ferie":
+                            jours[i].couleur_am = new Color(0xffdd88);
+                            break;
+                        default:
+                            jours[i].couleur_am = new Color(0x88ee66);
+                            break;
+                    }
                 }
+                
                 cal.set(Calendar.HOUR, 12);
                 if(conges.get(j).date.equals(cal)){
-                    if(conges.get(j).type.equals("weekend"))
-                        jours[i].couleur_pm = new Color(0x99ccff);
-                    else if(conges.get(j).type.equals("ferie"))
-                        jours[i].couleur_pm = new Color(0xffdd88);
-                    else
-                        jours[i].couleur_pm = new Color(0x88ee66);
+                    switch (conges.get(j).type) {
+                        case "weekend":
+                            jours[i].couleur_pm = new Color(0x99ccff);
+                            break;
+                        case "ferie":
+                            jours[i].couleur_pm = new Color(0xffdd88);
+                            break;
+                        default:
+                            jours[i].couleur_pm = new Color(0x88ee66);
+                            break;
+                    }
                 }
                 cal.set(Calendar.HOUR, 0);
             }
