@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,14 +16,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import java.net.URI;
+import java.net.URL;
 import java.awt.Desktop;
 import java.net.URISyntaxException;
 import java.io.IOException;
+import java.lang.ClassLoader;
 
 
 public class Fenetre extends JFrame {
 
-    // Variables declaration                
+    // Variables declaration
     private JMenuBar MainMenu;
     Panel_login panel_login;
     Panel_calendrier panel_calendrier;
@@ -84,12 +88,16 @@ public class Fenetre extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Super Congés 2000");
-        setIconImage(Toolkit.getDefaultToolkit().getImage("favicon.png")); 
-        
+        try{
+            URL url = ClassLoader.getSystemClassLoader().getResource("favicon.png");
+            BufferedImage image = ImageIO.read(this.getClass().getResource("favicon.png"));
+            setIconImage(image);
+        } catch (IOException | IllegalArgumentException e) {e.printStackTrace();}
+
         // Dimension Fenêtre
         setMinimumSize(new Dimension(250, 250));
         setPreferredSize(new Dimension(500, 500));
-        
+
         // Creation des menu et sous-menu
         JMenu menu = new JMenu("Fichier");
         JMenuItem config = new JMenuItem("Configuration");

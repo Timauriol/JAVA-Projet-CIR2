@@ -75,6 +75,7 @@ public class Bdd {
             System.out.println("Connexion à la BDD réussie.");
         } catch (SQLException e) {
             // on affiche rien, User s'en occupe
+            e.printStackTrace();
             connecBDD = null;
         }
     }//BDDConec
