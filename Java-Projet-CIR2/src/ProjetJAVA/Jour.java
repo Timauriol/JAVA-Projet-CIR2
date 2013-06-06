@@ -15,7 +15,7 @@ public class Jour extends JPanel {
     public JLabel num_jour;
     public boolean transparent;
 
-
+    // Constructeur
     public Jour(){
         this.setLayout(new BorderLayout());
         this.num_jour = new JLabel("",JLabel.LEFT);
@@ -25,11 +25,15 @@ public class Jour extends JPanel {
     }
 
 
+    @Override
+    // On édite le comportement de l'affichage de l'objet jour
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        
+        // On récupère la taille courante de l'objet jour
         Dimension size = this.getSize();
 
+        // On trace le triangle supérieur
         if (couleur_am != null){
             Point p1 = new Point(0,0);
             Point p2 = new Point(size.width,0);
@@ -42,6 +46,7 @@ public class Jour extends JPanel {
             g.fillPolygon(triangle);
         }
 
+        // On trace le triangle inférieur
         if(couleur_pm != null) {
             Point p1 = new Point(0,size.height);
             Point p2 = new Point(size.width,0);
@@ -56,7 +61,6 @@ public class Jour extends JPanel {
 
         num_jour.repaint();
     }
-
 }
 
 

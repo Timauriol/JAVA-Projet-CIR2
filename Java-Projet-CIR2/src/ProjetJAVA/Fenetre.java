@@ -13,24 +13,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-
 import java.net.URI;
 import java.awt.Desktop;
 import java.net.URISyntaxException;
 import java.io.IOException;
 
 
-
-
-/**
- *
- * @author Erza
- */
 public class Fenetre extends JFrame {
-
-    /**
-     * Creates new form Fenetre
-     */
 
     // Variables declaration                
     private JMenuBar MainMenu;
@@ -83,12 +72,11 @@ public class Fenetre extends JFrame {
         System.out.println("Affichage du panel_login");          
     }// Constructeur
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     */
 
+    // Methode d'initialisation des composants de la fenêtre
     private void initComponents() {
 
+        // Creation des objets
         panel_login = new Panel_login();
         user = new User();
         panel_calendrier = new Panel_calendrier(this, user);
@@ -97,19 +85,25 @@ public class Fenetre extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Super Congés 2000");
         setIconImage(Toolkit.getDefaultToolkit().getImage("favicon.png")); 
+        
+        // Dimension Fenêtre
         setMinimumSize(new Dimension(250, 250));
         setPreferredSize(new Dimension(500, 500));
-
+        
+        // Creation des menu et sous-menu
         JMenu menu = new JMenu("Fichier");
         JMenuItem config = new JMenuItem("Configuration");
         JMenuItem pdf = new JMenuItem("Télécharger PDF de demande de congé");
 
+        // Ajout de l'action au clic sourie sur le menu conf
         config.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 editMenuConf();
             }
         });
+        
+        // Ajout de l'action au clic sourie sur le menu Télécharger PDF
         pdf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -121,17 +115,16 @@ public class Fenetre extends JFrame {
                 }
             }
         });
+        
         menu.add(config);
         menu.add(pdf);
-
         MainMenu.add(menu);
-
         setJMenuBar(MainMenu);
         pack();
     }//initComponents
 
-    /* Affiche un boite de dialogue à l'user et récupère l'ip et le port 
-     * entré par celui-ci.
+    /* Affiche un boite de dialogue à l'utilisateur et récupère l'ip le port 
+     * et le nom de la BDD donné par l'utilisateur
      */
     private void editMenuConf() {
         // Boite de dialogue
@@ -142,9 +135,9 @@ public class Fenetre extends JFrame {
         temp = url_conf.split("/");
         temp1 = temp[0].split(":");
 
-        String url = null;
-        String port = null;
-        String bdd_name = null;
+        String url;
+        String port;
+        String bdd_name;
 
         if ( temp.length == 2){
             bdd_name = temp[1];
@@ -162,26 +155,25 @@ public class Fenetre extends JFrame {
         }
         else url = temp1[0];
 
+        // Edition du fichier de conf avec les param donné par l'utilisateur
         Bdd bdd = Bdd.getInstance();
         bdd.editConf(url,port,bdd_name);
         bdd.initConf();
-
     }//editMenuConf
 
-    // Fonction lancant la connexion avec les paramètres login/mdp saisie par l'user
+    // Fonction lançant la connexion avec les paramètres login/mdp saisie par l'utilisateur
     private void connexion () {
         String login = panel_login.getLogin();
         String mdp = panel_login.getPassword();
         user.verifAuth(login,mdp);
 
+        // Si l'authentification est réussi, on charge la suite du programme
         if (user.auth){
             panel_login.setVisible(false);
-            System.out.println("On Masque le panel_login");
-            panel_calendrier.majSolde();
-            panel_calendrier.majCalendrier();
+            panel_calendrier.majSolde(); // Mise à jour du solde
+            panel_calendrier.majCalendrier(); // Mise à jour du calandrier
             this.add("Center", panel_calendrier); // Ajout du Panel_calendrier à la fenetre
             panel_calendrier.setVisible(true);
-            System.out.println("Affichage du panel_calendrier");
         }
     }//connexion
 }//Classe Fenetre

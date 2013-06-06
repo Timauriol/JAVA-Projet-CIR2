@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.text.SimpleDateFormat;
 
 
 
@@ -25,7 +24,8 @@ class Conge{
         try{
             Connection connecBDD = Bdd.getInstance().connecBDD;
 
-            String sql = "SELECT type, EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date), EXTRACT(DAY FROM date), EXTRACT(HOUR FROM date) FROM conges WHERE login = ? AND date >= ? AND date <= ?";
+            String sql = "SELECT type, EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date),"
+                    + " EXTRACT(DAY FROM date), EXTRACT(HOUR FROM date) FROM conges WHERE login = ? AND date >= ? AND date <= ?";
             // On prépare la requête
             PreparedStatement statement = connecBDD.prepareStatement(sql);
             // On assigne les types des paramètres
