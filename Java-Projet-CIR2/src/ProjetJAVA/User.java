@@ -1,6 +1,5 @@
 package ProjetJAVA;
 
-import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,11 +54,13 @@ public class User {
             // Retourne false si l'authentification est incorrect
             auth = false;
 
-        }catch(SQLException | HeadlessException | NullPointerException ex) {
-            ex.printStackTrace();
+        } catch(SQLException ex) {
             // Affiche un message pour l'utilisateur
-            JOptionPane.showMessageDialog(null,"Connexion à la BDD échouée" );
+            JOptionPane.showMessageDialog(null,"Connexion à la BDD perdue");
             // Retourne false si il y a une erreur avec la BDD
+            auth = false;
+        } catch (NullPointerException ex){
+            JOptionPane.showMessageDialog(null,"Connexion à la BDD échouée, veuillez vérifier la configuration");
             auth = false;
         }
     }//Verif_Auth
