@@ -4,16 +4,20 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import java.net.URI;
+import java.awt.Desktop;
+import java.net.URISyntaxException;
+import java.io.IOException;
 
 
 
@@ -30,7 +34,6 @@ public class Fenetre extends JFrame {
 
     // Variables declaration                
     private JMenuBar MainMenu;
-    private JMenu Menu_Conf;
     Panel_login panel_login;
     Panel_consult panel_consult;
     User user;
@@ -90,7 +93,6 @@ public class Fenetre extends JFrame {
         user = new User();
         panel_consult = new Panel_consult(this, user);
         MainMenu = new JMenuBar();
-        Menu_Conf = new JMenu();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Super Congés 2000");
@@ -98,14 +100,30 @@ public class Fenetre extends JFrame {
         setMinimumSize(new Dimension(250, 250));
         setPreferredSize(new Dimension(500, 500));
 
-        Menu_Conf.setText("Configuration");
-        Menu_Conf.addMouseListener(new MouseAdapter() {
+        JMenu menu = new JMenu("Fichier");
+        JMenuItem config = new JMenuItem("Configuration");
+        JMenuItem pdf = new JMenuItem("Télécharger PDF de demande de congé");
+
+        config.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 editMenuConf();
             }
         });
-        MainMenu.add(Menu_Conf);
+        pdf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try{
+                    Desktop.getDesktop().browse(new URI("http://crouton.net/"));
+                } catch (URISyntaxException | IOException ex) {
+                }
+            }
+        });
+        menu.add(config);
+        menu.add(pdf);
+
+        MainMenu.add(menu);
+
         setJMenuBar(MainMenu);
         pack();
     }//initComponents
